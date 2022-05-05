@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
+    <form novalidate class="md-layout">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
           <div class="md-title">Login</div>
@@ -35,7 +35,7 @@ export default {
   name: "app",
   data() {
     return {
-      loginName: ""
+      loginName: "",
     };
   },
   components: { UnityScene },
@@ -46,8 +46,8 @@ export default {
     },
     startGame() {
       this.$refs.unityScene.startGame();
-    }
-  }
+    },
+  },
 };
 </script>
 

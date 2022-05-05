@@ -24,7 +24,7 @@ window["unityScript"] = () => {
     if (type == "error") div.style = "background: red; padding: 10px;";
     else {
       if (type == "warning") div.style = "background: yellow; padding: 10px;";
-      setTimeout(function() {
+      setTimeout(function () {
         warningBanner.removeChild(div);
         updateBannerVisibility();
       }, 5000);
@@ -42,7 +42,7 @@ window["unityScript"] = () => {
     companyName: "DefaultCompany",
     productName: "StuPro Demo",
     productVersion: "1.0",
-    showBanner: unityShowBanner
+    showBanner: unityShowBanner,
   };
 
   // By default Unity keeps WebGL canvas render target size matched with
@@ -67,16 +67,17 @@ window["unityScript"] = () => {
   var script = document.createElement("script");
   script.src = loaderUrl;
   script.onload = () => {
-    createUnityInstance(canvas, config, progress => {
+    // eslint-disable-next-line
+    createUnityInstance(canvas, config, (progress) => {
       progressBarFull.style.width = 100 * progress + "%";
     })
-      .then(unityInstance => {
+      .then((unityInstance) => {
         loadingBar.style.display = "none";
         fullscreenButton.onclick = () => {
           unityInstance.SetFullscreen(1);
         };
       })
-      .catch(message => {
+      .catch((message) => {
         alert(message);
       });
   };
