@@ -4,7 +4,7 @@ FROM node:12.14-alpine
 RUN npm install -g http-server
 
 # make the 'app' folder the current working directory
-WORKDIR /app
+WORKDIR /login-frontend
 
 # copy both 'package.json' and 'package-lock.json' (if available)
 COPY package*.json ./
@@ -15,8 +15,5 @@ RUN npm install
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
-# build app for production with minification
-RUN npm run build
-
-EXPOSE 8080
-CMD [ "http-server", "dist" ]
+EXPOSE 8000
+CMD [ "npm", "run", "serve", "--", "--port", "8000" ]
