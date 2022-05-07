@@ -14,7 +14,7 @@ Vue.use(MdField);
 Vue.use(MdCard);
 
 router.beforeEach((to, from, next) => {
-  if (hasToken() && to.name == "Login") {
+  if (hasToken() && (to.name == "Login" || to.name == "Register")) {
     next({ name: "App" })
   } else if (!hasToken() && to.name == "App") {
     next({ name: "Login" })
