@@ -1,52 +1,19 @@
 <template>
   <div id="app">
-    <form novalidate class="md-layout">
-      <md-card class="md-layout-item md-size-50 md-small-size-100">
-        <md-card-header>
-          <div class="md-title">Login</div>
-        </md-card-header>
-
-        <md-card-content>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100" style="display: flex">
-              <md-field>
-                <label>Login name</label>
-                <md-input v-model="loginName"></md-input>
-              </md-field>
-              <md-button
-                class="md-raised md-primary"
-                v-on:click="buttonPressed"
-              >
-                LOGIN
-              </md-button>
-            </div>
-          </div>
-        </md-card-content>
-      </md-card>
-    </form>
-
-    <UnityScene ref="unityScene"></UnityScene>
+    <div class="main">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import UnityScene from "./UnityScene.vue";
 export default {
   name: "app",
   data() {
     return {
-      loginName: "",
     };
   },
-  components: { UnityScene },
   methods: {
-    buttonPressed() {
-      window.localStorage.loginName = this.loginName;
-      this.startGame();
-    },
-    startGame() {
-      this.$refs.unityScene.startGame();
-    },
   },
 };
 </script>
