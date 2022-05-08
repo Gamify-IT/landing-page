@@ -60,7 +60,7 @@ export default {
                 timeout: 11000
             })
             setToken(token)
-            localStorage.setItem("username", name)
+            localStorage.setItem("loginName", name)
             this.$router.push({name: "App"})
         }).catch(error => {
             if (error.response) {
