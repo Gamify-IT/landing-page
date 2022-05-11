@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div class="main">
+    <!-- <div class="main">
       <router-view></router-view>
-    </div>
+    </div> -->
     <form
       novalidate
       id="login-form"
