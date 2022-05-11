@@ -54,6 +54,7 @@ export default {
     },
     startGame() {
       window.microServices.loadService("http://localhost:1234");
+      window.postMessage(JSON.stringify({ loginName: this.loginName }));
       this.gameStarted = true;
     },
   },
