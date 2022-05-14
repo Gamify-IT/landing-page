@@ -53,8 +53,8 @@ export default {
       this.startGame();
     },
     startGame() {
-      window.microServices.loadService("http://localhost:1234");
-      window.postMessage(JSON.stringify({ loginName: this.loginName }));
+      window.microServices.loadService("overworld/");
+      window.localStorage.loginName = this.loginName;
       this.gameStarted = true;
     },
   },
