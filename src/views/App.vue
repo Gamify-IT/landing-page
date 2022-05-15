@@ -7,10 +7,13 @@
     >
       Start
     </md-button>
+
+    <div id="micro-service-wrapper"></div>
   </div>
 </template>
 
 <script>
+import "@/load-app-script";
 export default {
   name: "AppPage",
   data() {
@@ -20,10 +23,18 @@ export default {
   },
   components: {},
   methods: {
-    startGame() {},
+    startGame() {
+      this.started = true
+      window.microServices.loadService("overworld/");
+      console.log("Started microservice")
+    },
   },
-  created: function () {
-    //this.startGame()
-  },
+  mounted: function () {
+  // wait till page is rendered and then start game
+  // needed because microService.loadService needs 'micro-service-wrapper' div
+  this.$nextTick(function () {
+    this.startGame()
+  })
+}
 };
 </script>

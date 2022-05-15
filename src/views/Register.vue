@@ -15,7 +15,7 @@
                         </md-field>
                         <md-field>
                             <label>E-Mail</label>
-                            <md-input v-model="register.email"></md-input>
+                            <md-input type="email" v-model="register.email"></md-input>
                         </md-field>
                         <md-field>
                             <label>Password</label>
@@ -24,6 +24,7 @@
                         <md-button
                             class="md-raised md-primary"
                             v-on:click="submitRegister"
+                            type="submit"
                         >
                             REGISTER
                         </md-button>
@@ -54,9 +55,28 @@ export default {
   methods: {
     submitRegister() {
         registerUser(this.register).then(() => {
-            console.log("RESPONSE")
+            this.$toast.success({
+                title: "Successfully registered", 
+                message: "Your user account has been successfully registered. You can now log in.",
+                position: "top-right",
+                hideDuration: 10000,
+                timeout: 11000
+            })
+            this.$router.push("/login")
+        }).catch(error => {
+            if (error.response) {
+                if (error.response.status == 400) {
+                    this.$toast.error({
+                        title: "Failure on register", 
+                        message: error.response.data.message,
+                        position: "top-right",
+                        hideDuration: 10000,
+                        timeout: 11000
+                    })
+                }
+            }
         })
-    }
+    },
   },
   created: function() {
   }
@@ -71,3 +91,4 @@ export default {
     margin-right: auto;
 }
 </style>
+<style src="cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css"></style>
