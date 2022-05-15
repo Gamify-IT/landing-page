@@ -1,11 +1,11 @@
 window.microServices = {
   services: {},
   loadService(url) {
-    if (Object.keys(this.services).includes(url)) {
-      this.services[url].style.display = "block";
+    if (Object.keys(window.microServices.services).includes(url)) {
+      window.microServices.services[url].style.display = "block";
       return;
     }
-    this.hideAllServices();
+    window.microServices.hideAllServices();
 
     var iframe = document.createElement("iframe");
     iframe.src = url;
@@ -15,18 +15,20 @@ window.microServices = {
     iframe.style.width = "100%";
     iframe.style.height = "100%";
     document.getElementById("micro-service-wrapper").appendChild(iframe);
-    this.services[url] = iframe;
+    window.microServices.services[url] = iframe;
     return iframe;
   },
   hideAllServices() {
-    Object.keys(this.services).forEach((service) => this.hideService(service));
+    Object.keys(window.microServices.services).forEach((service) =>
+      window.microServices.hideService(service)
+    );
   },
   hideService(url) {
-    if (!Object.keys(this.services).includes(url)) {
+    if (!Object.keys(window.microServices.services).includes(url)) {
       return console.warn(
         `Attempt to hide service '${url}' that doesn't exist.`
       );
     }
-    this.service[url].style.display = "none;";
+    window.microServices.service[url].style.display = "none;";
   },
 };
