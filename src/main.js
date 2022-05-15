@@ -8,9 +8,7 @@ import "vue-material/dist/theme/default.css";
 
 import CxltToastr from 'cxlt-vue2-toastr'
 
-import "./unity-script";
 import { hasToken } from "./js/login-rest-client";
-import "./load-app-script";
 
 Vue.use(CxltToastr)
 
