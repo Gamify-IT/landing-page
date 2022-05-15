@@ -19,7 +19,7 @@ window.microServices = {
     return iframe;
   },
   hideAllServices() {
-    Object.keys(this.services).forEach(this.hideService);
+    Object.keys(this.services).forEach((service) => this.hideService(service));
   },
   hideService(url) {
     if (!Object.keys(this.services).includes(url)) {
