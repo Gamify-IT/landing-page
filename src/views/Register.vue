@@ -39,23 +39,22 @@
     </form>
 </template>
 
-<script>
-import {registerUser} from "@/js/login-rest-client.js"
-export default {
-  name: "RegisterPage",
-  data() {
-    return {
-      register: {
-          username: "",
-          email: "",
-          password: "",
-      },
-    };
-  },
-  methods: {
-    submitRegister() {
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { registerUser } from "@/ts/login-rest-client"
+import type { register } from "@/types/"
+
+@Component
+export default class RegisterPage extends Vue {
+
+  private register: register = {
+      username: "",
+      email: "",
+      password: ""
+  }
+  public submitRegister(): void {
         registerUser(this.register).then(() => {
-            this.$toast.success({
+            Vue.prototype.$toast.success({
                 title: "Successfully registered", 
                 message: "Your user account has been successfully registered. You can now log in.",
                 position: "top-right",
@@ -66,7 +65,7 @@ export default {
         }).catch(error => {
             if (error.response) {
                 if (error.response.status == 400) {
-                    this.$toast.error({
+                    Vue.prototype.$toast.error({
                         title: "Failure on register", 
                         message: error.response.data.message,
                         position: "top-right",
@@ -76,11 +75,8 @@ export default {
                 }
             }
         })
-    },
-  },
-  created: function() {
-  }
-};
+    }
+}
 </script>
 
 <style lang="scss">

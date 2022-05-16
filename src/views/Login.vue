@@ -35,24 +35,23 @@
     </form>
 </template>
 
-<script>
-import {loginUser, setToken} from "@/js/login-rest-client.js"
-export default {
-  name: "LoginPage",
-  data() {
-    return {
-      login: {
-          username: "",
-          password: ""
-      },
-    };
-  },
-  methods: {
-    submitLogin() {
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { loginUser, setToken } from "@/ts/login-rest-client"
+
+import type { login } from "@/types/"
+
+@Component
+export default class LoginPage extends Vue {
+  private login: login = {
+      username: "",
+        password: ""
+  }
+  public submitLogin(): void {
         loginUser(this.login).then((response) => {
             var token = response.data.token
             var name = response.data.name
-            this.$toast.success({
+            Vue.prototype.$toast.success({
                 title: "Successfully logged in", 
                 message: "You get rediricted to the game app. Have fun!",
                 position: "top-right",
@@ -65,7 +64,7 @@ export default {
         }).catch(error => {
             if (error.response) {
                 if (error.response.status == 400) {
-                    this.$toast.error({
+                    Vue.prototype.$toast.error({
                         title: "Wrong credentials", 
                         message: "Username or password is wrong",
                         position: "top-right",
@@ -74,7 +73,7 @@ export default {
                     })
                 } else if (error.response.status == 500) {
                     var message = error.response.data.message
-                    this.$toast.error({
+                    Vue.prototype.$toast.error({
                         title: "Server error", 
                         message: message,
                         position: "top-right",
@@ -85,10 +84,7 @@ export default {
             }
         })
     }
-  },
-  created: function() {
-  }
-};
+}
 </script>
 
 <style lang="scss">

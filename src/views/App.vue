@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import "@/load-app-script";
+import "@/load-app-script.js";
 export default {
   name: "AppPage",
   data() {
