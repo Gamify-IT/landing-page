@@ -7,7 +7,7 @@ window.microServices = {
     }
     window.microServices.hideAllServices();
 
-    var iframe = document.createElement("iframe");
+    const iframe = document.createElement("iframe");
     iframe.src = url;
     iframe.style.position = "fixed";
     iframe.style.top = "0";

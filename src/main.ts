@@ -8,7 +8,7 @@ import "vue-material/dist/theme/default.css";
 
 import CxltToastr from 'cxlt-vue2-toastr'
 
-import { hasToken } from "./js/login-rest-client";
+import { hasToken } from "./ts/login-rest-client";
 
 Vue.use(CxltToastr)
 
