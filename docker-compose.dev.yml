@@ -29,15 +29,6 @@ services:
       - JWT_KEY=SecretKEY
       - POSTGRES_URL=postgresql://postgres:super_secure_password@login-db:5432/
 
-  #frontends
-  login-frontend:
-    container_name: login-frontend
-    build:
-      context: ./
-    restart: always
-    expose:
-      - "80"
-
   # reverse-proxy
   reverse-proxy:
     container_name: reverse-proxy

@@ -19,7 +19,7 @@ You can now see the whole build with backend on http://localhost.
 ```bash
 # Build the project as a Docker image.
 # Start the login-frontend, database, login-backend and reverse-proxy
-docker-compose up
+docker-compose up --build
 ```
 
 ## Project setup
