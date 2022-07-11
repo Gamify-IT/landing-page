@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
-import App from '@/views/App.vue';
+import AppView from '@/views/AppView.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/app',
     name: 'App',
-    component: App,
+    component: AppView,
   },
   {
     path: '/login',
@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/:pathMatch(.*)*',
     name: 'Not-Found',
-    component: App,
+    component: AppView,
   },
 ];
 

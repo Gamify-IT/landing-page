@@ -1,11 +1,3 @@
-<template>
-  <div>
-    <b-button v-if="started === false" class="btn-primary" v-on:click="startGame"> Start </b-button>
-
-    <div id="micro-service-wrapper"></div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import '@/load-app-script.js';
 import { onMounted, ref } from 'vue';
@@ -22,3 +14,11 @@ onMounted(() => {
   startGame();
 });
 </script>
+
+<template>
+  <div>
+    <b-button v-if="started === false" class="btn-primary" v-on:click="startGame"> Start </b-button>
+
+    <div id="micro-service-wrapper"></div>
+  </div>
+</template>

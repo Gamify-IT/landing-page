@@ -1,44 +1,3 @@
-<template>
-  <b-container class="mt-5">
-    <b-row class="d-flex justify-content-center">
-      <b-col md="6">
-        <b-card class="px-5 py-5" id="form">
-          <div class="form-data" v-if="true">
-            <div class="forms-inputs mb-4">
-              <span>Username</span>
-              <b-form-input
-                id="username-input"
-                autocomplete="off"
-                type="text"
-                v-model="login.username"
-                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidUsername(login.username) }"
-                v-on:blur="false"
-              />
-              <div class="invalid-feedback">Username must be at least 3 character!</div>
-            </div>
-            <div class="forms-inputs mb-4">
-              <span>Password</span>
-              <b-form-input
-                id="password-input"
-                autocomplete="off"
-                type="password"
-                v-model="login.password"
-                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidPassword(login.password) }"
-                v-on:blur="false"
-              />
-              <div class="invalid-feedback">Password must be at least 5 character!</div>
-            </div>
-            <div class="mb-3">
-              <b-button v-on:click.stop.prevent="submitLogin" variant="dark" class="w-100">Login</b-button>
-            </div>
-          </div>
-          <div>Dont Have an Account? Create one <router-link to="/register">HERE</router-link></div>
-        </b-card>
-      </b-col>
-    </b-row>
-  </b-container>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import { loginUser, setLoginName, isValidUsername, isValidPassword } from '@/ts/login-rest-client';
@@ -51,7 +10,8 @@ const toast = useToast();
 const login = ref({ username: '', password: '' });
 
 async function submitLogin() {
-  if (!isValidPassword(login.value.username) || !isValidUsername(login.value.password)) {
+  if (!isValidPassword(login.value.password) || !isValidUsername(login.value.username)) {
+    toast.error(`There are invalid inputs.`);
     return;
   }
   await loginUser(login.value)
@@ -76,10 +36,48 @@ async function submitLogin() {
 }
 </script>
 
+<template>
+  <b-container class="mt-5">
+    <b-row class="d-flex justify-content-center">
+      <b-col md="6">
+        <b-card class="px-5 py-5" id="form">
+          <form @submit.prevent>
+            <div class="forms-inputs mb-4">
+              <span>Username</span>
+              <b-form-input
+                id="username-input"
+                autocomplete="off"
+                type="text"
+                v-model="login.username"
+                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidUsername(login.username) }"
+                v-on:blur="false"
+              />
+              <div class="invalid-feedback">Username must be at least 3 character!</div>
+            </div>
+            <div class="forms-inputs mb-4">
+              <span>Password</span>
+              <b-form-input
+                id="password-input"
+                autocomplete="off"
+                type="password"
+                v-model="login.password"
+                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidPassword(login.password) }"
+                v-on:blur="false"
+              />
+              <div class="invalid-feedback">Password must be at least 4 character!</div>
+            </div>
+            <div class="mb-3">
+              <b-button @click="submitLogin" type="submit" variant="dark" class="w-100">Login</b-button>
+            </div>
+          </form>
+          <div>Dont Have an Account? Create one <router-link to="/register">HERE</router-link></div>
+        </b-card>
+      </b-col>
+    </b-row>
+  </b-container>
+</template>
+
 <style lang="css">
-body {
-  background: #000;
-}
 .forms-inputs {
   position: relative;
 }
