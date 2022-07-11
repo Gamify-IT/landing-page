@@ -1,35 +1,26 @@
 <template>
-  <div id="app">
-    <div class="main">
-      <router-view></router-view>
-    </div>
-  
-  </div>
+  <router-view />
 </template>
 
-<script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-
-@Component
-export default class App extends Vue {
-}
-</script>
-
-<style lang="scss">
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
-#login-form {
-  z-index: -100;
+nav {
+  padding: 30px;
 }
 
-#micro-service-wrapper {
-  z-index: 100;
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

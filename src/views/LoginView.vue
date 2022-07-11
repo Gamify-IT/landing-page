@@ -1,0 +1,113 @@
+<template>
+  <b-container class="mt-5">
+    <b-row class="d-flex justify-content-center">
+      <b-col md="6">
+        <b-card class="px-5 py-5" id="form">
+          <div class="form-data" v-if="true">
+            <div class="forms-inputs mb-4">
+              <span>Username</span>
+              <b-form-input
+                id="username-input"
+                autocomplete="off"
+                type="text"
+                v-model="login.username"
+                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidUsername(login.username) }"
+                v-on:blur="false"
+              />
+              <div class="invalid-feedback">Username must be at least 3 character!</div>
+            </div>
+            <div class="forms-inputs mb-4">
+              <span>Password</span>
+              <b-form-input
+                id="password-input"
+                autocomplete="off"
+                type="password"
+                v-model="login.password"
+                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidPassword(login.password) }"
+                v-on:blur="false"
+              />
+              <div class="invalid-feedback">Password must be at least 5 character!</div>
+            </div>
+            <div class="mb-3">
+              <b-button v-on:click.stop.prevent="submitLogin" variant="dark" class="w-100">Login</b-button>
+            </div>
+          </div>
+          <div>Dont Have an Account? Create one <router-link to="/register">HERE</router-link></div>
+        </b-card>
+      </b-col>
+    </b-row>
+  </b-container>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { loginUser, setLoginName, isValidUsername, isValidPassword } from '@/ts/login-rest-client';
+
+import router from '@/router/index';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
+
+const login = ref({ username: '', password: '' });
+
+async function submitLogin() {
+  if (!isValidPassword(login.value.username) || !isValidUsername(login.value.password)) {
+    return;
+  }
+  await loginUser(login.value)
+    .then((response) => {
+      var name = response.data.name;
+      setLoginName(name);
+      router.push('/app');
+      toast.success(`You get rediricted to the game app. Have fun!`);
+    })
+    .catch((error) => {
+      if (error.response) {
+        if (error.response.status == 400) {
+          toast.error(`Username or password is wrong`);
+        } else if (error.response.status == 500) {
+          var message = error.response.data.message;
+          toast.error(`${message}`);
+        } else {
+          toast.error(`Something went wrong!`);
+        }
+      }
+    });
+}
+</script>
+
+<style lang="css">
+body {
+  background: #000;
+}
+.forms-inputs {
+  position: relative;
+}
+.forms-inputs span {
+  position: absolute;
+  top: -18px;
+  left: 10px;
+  background-color: #fff;
+  padding: 5px 10px;
+  font-size: 15px;
+}
+.forms-inputs input {
+  height: 50px;
+  border: 2px solid #eee;
+}
+.forms-inputs input:focus {
+  box-shadow: none;
+  outline: none;
+  border: 2px solid #000;
+}
+.btn {
+  height: 50px;
+}
+.success-data {
+  display: flex;
+  flex-direction: column;
+}
+.bxs-badge-check {
+  font-size: 90px;
+}
+</style>
