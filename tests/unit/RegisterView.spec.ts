@@ -5,7 +5,7 @@ import router from '@/router/index';
 import RegisterView from '@/views/RegisterView.vue';
 import BootstrapVue3, { BButton } from 'bootstrap-vue-3';
 import { register } from '@/types';
-import { hasToken } from '@/ts/login-rest-client';
+import { auth } from '@/ts/login-rest-client';
 
 jest.mock('axios');
 
@@ -37,7 +37,7 @@ describe('RegisterView.vue', () => {
     expect(inputName.exists()).toBe(true);
     expect(inputEMail.exists()).toBe(true);
     expect(inputPassword.exists()).toBe(true);
-    +expect(hasToken()).toBe(false);
+    expect(auth.isLoggedIn).toBe(false);
 
     inputName.setValue(register.username);
     inputEMail.setValue(register.email);
@@ -48,7 +48,7 @@ describe('RegisterView.vue', () => {
     await flushPromises();
 
     expect(mockAxios.post).toHaveBeenCalledWith(`${config.apiBaseUrl}/register`, register);
-    expect(hasToken()).toBe(false);
+    expect(auth.isLoggedIn).toBe(false);
 
     // After register the user gets redirected to login page
     expect(router.currentRoute.value.fullPath).toBe('/login');

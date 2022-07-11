@@ -5,7 +5,7 @@ import router from '@/router/index';
 import LoginView from '@/views/LoginView.vue';
 import BootstrapVue3, { BButton } from 'bootstrap-vue-3';
 import { login } from '@/types';
-import { hasToken } from '@/ts/login-rest-client';
+import { auth } from '@/ts/login-rest-client';
 
 jest.mock('axios');
 
@@ -36,7 +36,7 @@ describe('LoginView.vue', () => {
     expect(inputName.exists()).toBe(true);
     expect(inputPassword.exists()).toBe(true);
 
-    expect(hasToken()).toBe(false);
+    expect(auth.isLoggedIn).toBe(false);
 
     inputName.setValue(login.username);
     inputPassword.setValue(login.password);
@@ -46,7 +46,7 @@ describe('LoginView.vue', () => {
     await flushPromises();
 
     expect(mockAxios.post).toHaveBeenCalledWith(`${config.apiBaseUrl}/login`, login);
-    expect(hasToken()).toBe(true);
+    expect(auth.isLoggedIn).toBe(true);
 
     expect(router.currentRoute.value.fullPath).toBe('/app');
   });
