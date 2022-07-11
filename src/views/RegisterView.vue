@@ -50,7 +50,10 @@ async function submitRegister() {
                 autocomplete="off"
                 type="text"
                 v-model="register.username"
-                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidUsername(register.username) }"
+                v-bind:class="{
+                  'form-control': true,
+                  'is-invalid': !isValidUsername(register.username) && register.username.length > 0,
+                }"
                 v-on:blur="false"
               />
               <div class="invalid-feedback">Username must be at least 3 character!</div>
@@ -62,7 +65,7 @@ async function submitRegister() {
                 autocomplete="off"
                 type="text"
                 v-model="register.email"
-                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidEMail(register.email) }"
+                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidEMail(register.email) && register.email.length > 0 }"
                 v-on:blur="false"
               />
               <div class="invalid-feedback">Email must be valid!</div>
@@ -74,7 +77,10 @@ async function submitRegister() {
                 autocomplete="off"
                 type="password"
                 v-model="register.password"
-                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidPassword(register.password) }"
+                v-bind:class="{
+                  'form-control': true,
+                  'is-invalid': !isValidPassword(register.password) && register.password.length > 0,
+                }"
                 v-on:blur="false"
               />
               <div class="invalid-feedback">Password must be at least 4 character!</div>

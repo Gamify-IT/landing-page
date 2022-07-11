@@ -49,7 +49,10 @@ async function submitLogin() {
                 autocomplete="off"
                 type="text"
                 v-model="login.username"
-                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidUsername(login.username) }"
+                v-bind:class="{
+                  'form-control': true,
+                  'is-invalid': !isValidUsername(login.username) && login.username.length > 0,
+                }"
                 v-on:blur="false"
               />
               <div class="invalid-feedback">Username must be at least 3 character!</div>
@@ -61,7 +64,10 @@ async function submitLogin() {
                 autocomplete="off"
                 type="password"
                 v-model="login.password"
-                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidPassword(login.password) }"
+                v-bind:class="{
+                  'form-control': true,
+                  'is-invalid': !isValidPassword(login.password) && login.password.length > 0,
+                }"
                 v-on:blur="false"
               />
               <div class="invalid-feedback">Password must be at least 4 character!</div>
