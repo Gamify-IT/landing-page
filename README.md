@@ -10,6 +10,9 @@ docker-compose -f docker-compose.dev.yml up --detach
 
 # Build project with hot-reload
 npm run serve
+
+# When you are down: shut down the database, backend, proxy, etc.
+docker-compose -f docker-compose.dev.yml down
 ```
 
 You can now see the whole build with backend on http://localhost.
