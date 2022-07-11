@@ -1,38 +1,34 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import LoginView from '@/views/LoginView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import AppView from '@/views/AppView.vue';
 
-import Login from "../views/Login.vue";
-import Register from "../views/Register.vue";
-import App from "../views/App.vue";
-
-Vue.use(VueRouter);
-
-// all frontend routes of the app, i.e. bind a path to a Vue component
-const routes = [
-    {
-        path: "/login",
-        name: "Login",
-        component: Login
-    },
-    {
-        path: "/register",
-        name: "Register",
-        component: Register
-    },
-    {
-        path: "/app",
-        name: "App",
-        component: App
-    },
-    { path: 
-        '/:pathMatch(.*)*', 
-        name: 'Not-Found', 
-        component: App 
-    }
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/app',
+    name: 'App',
+    component: AppView,
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView,
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterView,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Not-Found',
+    component: AppView,
+  },
 ];
 
-const router = new VueRouter({
-    routes
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
 });
 
 export default router;

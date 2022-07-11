@@ -1,6 +1,6 @@
-FROM node:12.14-alpine as builder
+FROM node:17-alpine as builder
 
-WORKDIR /login-frontend
+WORKDIR /vue-ui
 
 # Copy the package.json and install dependencies
 COPY package*.json ./
@@ -19,6 +19,6 @@ COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy from the stahg 1
-COPY --from=builder /login-frontend/dist /usr/share/nginx/html
+COPY --from=builder /vue-ui/dist /usr/share/nginx/html
 
-EXPOSE 8000
+EXPOSE 80/tcp
