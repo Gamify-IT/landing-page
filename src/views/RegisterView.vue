@@ -72,7 +72,7 @@ async function submitRegister() {
               <b-form-input
                 id="password-input"
                 autocomplete="off"
-                type="text"
+                type="password"
                 v-model="register.password"
                 v-bind:class="{ 'form-control': true, 'is-invalid': !isValidPassword(register.password) }"
                 v-on:blur="false"
