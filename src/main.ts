@@ -12,7 +12,7 @@ import 'vue-toastification/dist/index.css';
 
 import { hasToken } from './ts/login-rest-client';
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   if (hasToken() && (to.name == 'Login' || to.name == 'Register')) {
     next({ name: 'App' });
   } else if (!hasToken() && to.name == 'App') {

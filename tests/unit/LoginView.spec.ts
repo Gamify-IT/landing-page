@@ -4,7 +4,7 @@ import mockAxios from 'jest-mock-axios';
 import router from '@/router/index';
 import LoginView from '@/views/LoginView.vue';
 import BootstrapVue3, { BButton } from 'bootstrap-vue-3';
-import { login } from '@/types';
+import type { Login } from '@/types';
 import { hasToken } from '@/ts/login-rest-client';
 
 jest.mock('axios');
@@ -25,7 +25,7 @@ describe('LoginView.vue', () => {
     const response = { data: { id: 1, name: 'Username' } };
     mockAxios.post.mockResolvedValueOnce(response);
 
-    const login: login = { username: 'Username', password: 'Password' };
+    const login: Login = { username: 'Username', password: 'Password' };
 
     expect(router.currentRoute.value.fullPath).toBe('/login');
 

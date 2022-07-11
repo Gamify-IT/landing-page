@@ -1,13 +1,13 @@
 import config from '@/config';
 import axios from 'axios';
 
-import type { login, register } from '@/types/';
+import type { Login, Register } from '@/types/';
 
-export const loginUser = async function (login: login) {
+export const loginUser = async function (login: Login) {
   return axios.post(`${config.apiBaseUrl}/login`, login);
 };
 
-export const registerUser = async function (register: register) {
+export const registerUser = async function (register: Register) {
   return axios.post(`${config.apiBaseUrl}/register`, register);
 };
 

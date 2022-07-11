@@ -16,7 +16,7 @@ async function submitLogin() {
   }
   await loginUser(login.value)
     .then((response) => {
-      var name = response.data.name;
+      const name = response.data.name;
       setLoginName(name);
       router.push('/app');
       toast.success(`You get rediricted to the game app. Have fun!`);
@@ -26,7 +26,7 @@ async function submitLogin() {
         if (error.response.status == 400) {
           toast.error(`Username or password is wrong`);
         } else if (error.response.status == 500) {
-          var message = error.response.data.message;
+          const message = error.response.data.message;
           toast.error(`${message}`);
         } else {
           toast.error(`Something went wrong!`);
