@@ -1,5 +1,27 @@
 # login-frontend
 
+## Development
+
+### With live rebuild
+
+```bash
+# Start database, login-backend and reverse-proxy in background
+docker-compose -f docker-compose.dev.yml up --detach
+
+# Build project with hot-reload
+npm run serve
+```
+
+You can now see the whole build with backend on http://localhost.
+
+### From Docker build
+
+```bash
+# Build the project as a Docker image.
+# Start the login-frontend, database, login-backend and reverse-proxy
+docker-compose up
+```
+
 ## Project setup
 ```
 npm install
