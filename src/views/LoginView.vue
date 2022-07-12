@@ -20,7 +20,7 @@ async function submitLogin() {
       let name = response.data.name;
       auth.setLoginName(name);
       router.push('/app');
-      toast.success(`You get rediricted to the game app. Have fun!`);
+      toast.success(`Have fun!`);
     })
     .catch((error) => {
       if (error.response) {
