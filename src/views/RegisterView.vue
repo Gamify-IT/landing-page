@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { registerUser, isValidUsername, isValidPassword, isValidEMail } from '@/ts/login-rest-client';
+import { auth } from '@/ts/login-rest-client';
 import { ref } from 'vue';
 
 import router from '@/router/index';
@@ -11,14 +11,15 @@ const register = ref({ username: '', password: '', email: '' });
 
 async function submitRegister() {
   if (
-    !isValidPassword(register.value.password) ||
-    !isValidUsername(register.value.username) ||
-    !isValidEMail(register.value.email)
+    !auth.isValidPassword(register.value.password) ||
+    !auth.isValidUsername(register.value.username) ||
+    !auth.isValidEMail(register.value.email)
   ) {
     toast.error(`There are invalid inputs.`);
     return;
   }
-  await registerUser(register.value)
+  await auth
+    .registerUser(register.value)
     .then(() => {
       router.push('/login');
       toast.success(`You get rediricted to the login page.`);
@@ -52,7 +53,7 @@ async function submitRegister() {
                 v-model="register.username"
                 v-bind:class="{
                   'form-control': true,
-                  'is-invalid': !isValidUsername(register.username) && register.username.length > 0,
+                  'is-invalid': !auth.isValidUsername(register.username) && register.username.length > 0,
                 }"
                 v-on:blur="false"
               />
@@ -65,7 +66,10 @@ async function submitRegister() {
                 autocomplete="off"
                 type="text"
                 v-model="register.email"
-                v-bind:class="{ 'form-control': true, 'is-invalid': !isValidEMail(register.email) && register.email.length > 0 }"
+                v-bind:class="{
+                  'form-control': true,
+                  'is-invalid': !auth.isValidEMail(register.email) && register.email.length > 0,
+                }"
                 v-on:blur="false"
               />
               <div class="invalid-feedback">Email must be valid!</div>
@@ -79,7 +83,7 @@ async function submitRegister() {
                 v-model="register.password"
                 v-bind:class="{
                   'form-control': true,
-                  'is-invalid': !isValidPassword(register.password) && register.password.length > 0,
+                  'is-invalid': !auth.isValidPassword(register.password) && register.password.length > 0,
                 }"
                 v-on:blur="false"
               />

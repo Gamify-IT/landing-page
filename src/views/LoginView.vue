@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { loginUser, setLoginName, isValidUsername, isValidPassword } from '@/ts/login-rest-client';
+import { auth } from '@/ts/login-rest-client';
 
 import router from '@/router/index';
 import { useToast } from 'vue-toastification';
@@ -10,23 +10,24 @@ const toast = useToast();
 const login = ref({ username: '', password: '' });
 
 async function submitLogin() {
-  if (!isValidPassword(login.value.password) || !isValidUsername(login.value.username)) {
+  if (!auth.isValidPassword(login.value.password) || !auth.isValidUsername(login.value.username)) {
     toast.error(`There are invalid inputs.`);
     return;
   }
-  await loginUser(login.value)
+  await auth
+    .loginUser(login.value)
     .then((response) => {
-      var name = response.data.name;
-      setLoginName(name);
+      let name = response.data.name;
+      auth.setLoginName(name);
       router.push('/app');
-      toast.success(`You get rediricted to the game app. Have fun!`);
+      toast.success(`Have fun!`);
     })
     .catch((error) => {
       if (error.response) {
         if (error.response.status == 400) {
           toast.error(`Username or password is wrong`);
         } else if (error.response.status == 500) {
-          var message = error.response.data.message;
+          let message = error.response.data.message;
           toast.error(`${message}`);
         } else {
           toast.error(`Something went wrong!`);
@@ -51,7 +52,7 @@ async function submitLogin() {
                 v-model="login.username"
                 v-bind:class="{
                   'form-control': true,
-                  'is-invalid': !isValidUsername(login.username) && login.username.length > 0,
+                  'is-invalid': !auth.isValidUsername(login.username) && login.username.length > 0,
                 }"
                 v-on:blur="false"
               />
@@ -66,7 +67,7 @@ async function submitLogin() {
                 v-model="login.password"
                 v-bind:class="{
                   'form-control': true,
-                  'is-invalid': !isValidPassword(login.password) && login.password.length > 0,
+                  'is-invalid': !auth.isValidPassword(login.password) && login.password.length > 0,
                 }"
                 v-on:blur="false"
               />
