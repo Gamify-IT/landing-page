@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
     console.log('STATUS: user is logged in, redirect to app');
     next({ name: 'App' });
   } else if (!auth.isLoggedIn && to.name == 'App') {
-    console.log('STATUS: user ist not logged, redirect to login');
+    console.log('STATUS: user is not logged in, redirect to login');
     next({ name: 'Login' });
   } else if (to.name == 'Not-Found') {
     console.log('STATUS: not found');
