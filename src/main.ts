@@ -12,7 +12,7 @@ import 'vue-toastification/dist/index.css';
 
 import { auth } from './ts/login-rest-client';
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   if (auth.isLoggedIn && (to.name == 'Login' || to.name == 'Register')) {
     console.log('STATUS: user is logged in, redirect to app');
     next({ name: 'App' });

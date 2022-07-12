@@ -1,16 +1,15 @@
 import axios from 'axios';
-
 import config from '@/config';
-import type { login, register } from '@/types/';
+import type { Login, Register } from '@/types/';
 
 class Authentication {
   public isLoggedIn = false;
 
-  public async registerUser(register: register) {
+  public async registerUser(register: Register) {
     return axios.post(`${config.apiBaseUrl}/register`, register);
   }
 
-  public async loginUser(login: login) {
+  public async loginUser(login: Login) {
     const result = axios.post(`${config.apiBaseUrl}/login`, login);
     await this.checkLoginStatusAndRenewToken();
     return result;

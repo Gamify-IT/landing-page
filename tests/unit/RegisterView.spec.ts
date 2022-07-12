@@ -4,7 +4,7 @@ import mockAxios from 'jest-mock-axios';
 import router from '@/router/index';
 import RegisterView from '@/views/RegisterView.vue';
 import BootstrapVue3, { BButton } from 'bootstrap-vue-3';
-import { register } from '@/types';
+import type { Register } from '@/types';
 import { auth } from '@/ts/login-rest-client';
 
 jest.mock('axios');
@@ -25,7 +25,7 @@ describe('RegisterView.vue', () => {
     const response = { data: { id: 1, name: 'Username' } };
     mockAxios.post.mockResolvedValueOnce(response);
 
-    const register: register = { username: 'Username', email: 'email@valid.com', password: 'Password' };
+    const register: Register = { username: 'Username', email: 'email@valid.com', password: 'Password' };
 
     expect(router.currentRoute.value.fullPath).toBe('/register');
 
@@ -37,6 +37,7 @@ describe('RegisterView.vue', () => {
     expect(inputName.exists()).toBe(true);
     expect(inputEMail.exists()).toBe(true);
     expect(inputPassword.exists()).toBe(true);
+
     expect(auth.isLoggedIn).toBe(false);
 
     inputName.setValue(register.username);
