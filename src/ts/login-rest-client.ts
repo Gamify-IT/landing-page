@@ -1,32 +1,44 @@
-import config from '@/config';
 import axios from 'axios';
-
+import config from '@/config';
 import type { Login, Register } from '@/types/';
 
-export const loginUser = async function (login: Login) {
-  return axios.post(`${config.apiBaseUrl}/login`, login);
-};
+class Authentication {
+  public isLoggedIn = false;
 
-export const registerUser = async function (register: Register) {
-  return axios.post(`${config.apiBaseUrl}/register`, register);
-};
+  public async registerUser(register: Register) {
+    return axios.post(`${config.apiBaseUrl}/register`, register);
+  }
 
-export const hasToken = function () {
-  return localStorage.getItem('loginName') != null;
-};
+  public async loginUser(login: Login) {
+    const result = axios.post(`${config.apiBaseUrl}/login`, login);
+    await this.checkLoginStatusAndRenewToken();
+    return result;
+  }
 
-export const setLoginName = function (name: string) {
-  localStorage.setItem('loginName', name);
-};
+  public async checkLoginStatusAndRenewToken() {
+    try {
+      await axios.post(`${config.apiBaseUrl}/authenticate`);
+      this.isLoggedIn = true;
+    } catch (_) {
+      this.isLoggedIn = false;
+    }
+  }
 
-export function isValidUsername(username: string) {
-  return username.length >= 3;
+  public setLoginName(name: string) {
+    localStorage.setItem('loginName', name);
+  }
+
+  public isValidUsername(username: string): boolean {
+    return username.length >= 3;
+  }
+
+  public isValidEMail(email: string): boolean {
+    return email.includes('@');
+  }
+
+  public isValidPassword(password: string) {
+    return password.length >= 4;
+  }
 }
 
-export function isValidEMail(email: string) {
-  return email.includes('@');
-}
-
-export function isValidPassword(password: string) {
-  return password.length >= 4;
-}
+export const auth = new Authentication();
