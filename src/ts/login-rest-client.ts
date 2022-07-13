@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import config from '@/config';
 import type { Login, Register } from '@/types/';
 
@@ -10,7 +11,7 @@ class Authentication {
   }
 
   public async loginUser(login: Login) {
-    const result = axios.post(`${config.apiBaseUrl}/login`, login);
+    const result = await axios.post(`${config.apiBaseUrl}/login`, login);
     await this.checkLoginStatusAndRenewToken();
     return result;
   }
