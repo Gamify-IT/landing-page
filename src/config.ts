@@ -1,4 +1,4 @@
 export default {
   // URL of the RESTful API
-  apiBaseUrl: '/api/login',
+  apiBaseUrl: '/login/api/v1',
 };
