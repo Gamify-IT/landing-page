@@ -1,4 +1,8 @@
-# login-frontend
+# landing-page
+
+This is the first page which is shown when the user visits the website.
+
+For now, it only contains a link to the login page.
 
 ## Development
 
@@ -15,13 +19,18 @@ npm run serve
 docker-compose -f docker-compose.dev.yml down
 ```
 
-You can now see the whole build with backend on http://localhost.
+You can now see the whole build on <http://localhost>.
+
+#### Important links
+- Landing page: <http://localhost/>
+- Keycloak admin console: <http://localhost/keycloak/admin/master/console/>
+- Account page for Gamify-IT users (you can manually log in and out here): <http://localhost/keycloak/realms/Gamify-IT/account/#/>
 
 ### From Docker build
 
 ```bash
 # Build the project as a Docker image.
-# Start the login-frontend, database, login-backend and reverse-proxy
+# Start the landing-page, keycloak, database and reverse-proxy
 docker-compose up --build
 ```
 
