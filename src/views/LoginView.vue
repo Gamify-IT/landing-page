@@ -1,76 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 import { keycloak } from '@/ts/keycloak-rest-client';
 import store from '@/store';
-import { TokenResponse } from '@/types';
+import { QueryParams } from '@/ts/query';
+import { auth } from '@/ts/auth';
+import router from '@/router';
 
-const queryParams = ref({} as { [key: string]: string });
+async function redirectIfUserIsSignedIn() {
+  await auth.tryGetAccessTokenWithCode(QueryParams.get('code'));
+  const isLoggedIn = await auth.tryUpdateUserInfo();
 
-function parseQueryParams() {
-  // parse query parameters
-  const props = window.location.search
-    .slice(1)
-    .split('&')
-    .map((e) => e.split('='));
-  const paramMap: { [key: string]: string } = {};
-
-  for (const prop of props) {
-    paramMap[prop[0]] = prop[1];
-  }
-
-  queryParams.value = paramMap;
-}
-
-function applyAuthenticationResult(result: TokenResponse) {
-  store.commit('setAccessToken', { token: result.access_token, expiresIn: result.expires_in });
-  store.commit('setRefreshToken', result.refresh_token);
-  store.commit('setIdToken', result.id_token);
-}
-
-async function tryUpdateUserInfo() {
-  if (store.state.accessToken) {
-    const userResult = await keycloak.fetchUser(store.state.accessToken);
-    if (userResult) {
-      store.commit('setPreferredUsername', userResult.preferred_username);
-      console.log('user authenticated:', userResult);
-    }
+  if (isLoggedIn) {
+    await router.push({ name: 'App' });
   }
 }
 
-async function tryRenewAccessToken() {
-  if (store.state.refreshToken) {
-    try {
-      const result = await keycloak.renewAuthentication(store.state.refreshToken);
-      applyAuthenticationResult(result);
-      console.log('access token renewed');
-    } catch (e) {
-      console.log('could not renew authentication -> resetting outdated auth data', e);
-      store.commit('resetAuth');
-    }
-  }
-}
-
-async function tryGetAccessTokenWithCode() {
-  if (!store.state.accessToken && queryParams.value.code) {
-    try {
-      const result = await keycloak.completeAuthentication(queryParams.value.code);
-      applyAuthenticationResult(result);
-      console.log('new access token received');
-    } catch (e) {
-      console.log('user not authenticated', e);
-    }
-  }
-}
-
-async function init() {
-  parseQueryParams();
-  await tryRenewAccessToken();
-  await tryGetAccessTokenWithCode();
-  await tryUpdateUserInfo();
-}
-
-init();
+redirectIfUserIsSignedIn();
 </script>
 
 <template>

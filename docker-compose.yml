@@ -5,7 +5,7 @@ services:
   # databases
   setup:
     container_name: setup
-    image: ghcr.io/gamify-it/test-data:feature-keycloak
+    image: ghcr.io/gamify-it/test-data:latest
     pull_policy: always
     restart: on-failure
     environment:
@@ -28,8 +28,6 @@ services:
     container_name: keycloak
     expose:
       - "80"
-    ports:
-      - "8080:80"
     image: quay.io/keycloak/keycloak:19.0
     command:
       - "start-dev"
@@ -42,9 +40,8 @@ services:
       KC_DB_USERNAME: postgres
       KC_DB_PASSWORD: postgres
 
-      KC_PROXY: edge
       KC_HOSTNAME: localhost
-      KC_HOSTNAME_ADMIN: localhost
+      KC_PROXY: edge
       KC_HTTP_RELATIVE_PATH: /keycloak
       KC_HTTP_PORT: 80
 

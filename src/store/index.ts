@@ -20,7 +20,9 @@ export default createStore({
     setAccessToken(state, accessToken: { token: string; expiresIn: number }) {
       const d = new Date();
       d.setSeconds(d.getSeconds() + accessToken.expiresIn);
-      document.cookie = `${config.auth.cookieName}=${accessToken.token}; expires=${d.toUTCString()}; path=/`;
+      document.cookie = `${config.auth.cookie.name}=${accessToken.token}; expires=${d.toUTCString()}; ${
+        config.auth.cookie.options
+      }`;
       localStorage.setItem(config.auth.localStorageKeys.accessToken, accessToken.token);
       state.accessToken = accessToken.token;
     },
@@ -33,7 +35,7 @@ export default createStore({
       state.idToken = idToken;
     },
     resetAuth(state) {
-      document.cookie = `${config.auth.cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      document.cookie = `${config.auth.cookie.name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; ${config.auth.cookie.options}`;
       localStorage.removeItem(config.auth.localStorageKeys.accessToken);
       localStorage.removeItem(config.auth.localStorageKeys.refreshToken);
       localStorage.removeItem(config.auth.localStorageKeys.idToken);
