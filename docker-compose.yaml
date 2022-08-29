@@ -11,6 +11,7 @@ services:
     environment:
       POSTGRES_SETUP: >
         keycloak/default.sql
+        overworld/default.sql
 
   keycloak-db:
     container_name: keycloak-db
@@ -79,6 +80,14 @@ services:
   overworld:
     container_name: overworld
     image: ghcr.io/gamify-it/overworld:main
+    restart: always
+    pull_policy: always
+    expose:
+      - "80"
+
+  lecturer-interface:
+    container_name: lecturer-interface
+    image: ghcr.io/gamify-it/lecturer-interface:main
     restart: always
     pull_policy: always
     expose:
