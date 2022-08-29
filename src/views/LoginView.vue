@@ -10,7 +10,7 @@ async function redirectIfUserIsSignedIn() {
   const isLoggedIn = await auth.tryUpdateUserInfo();
 
   if (isLoggedIn) {
-    await router.push({ name: 'App' });
+    await router.push({ name: 'Start' });
   }
 }
 

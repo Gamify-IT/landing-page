@@ -76,3 +76,36 @@ export interface UserResponse {
   given_name: string;
   family_name: string;
 }
+
+/**
+ * Colors to style buttons in bootstrap colors
+ */
+export enum Color {
+  PRIMARY = 'bg-primary',
+  SECONDARY = 'bg-secondary',
+  SUCCESS = 'bg-success',
+  INFO = 'bg-info',
+  WARNING = 'bg-warning',
+  LIGHT = 'bg-light',
+}
+
+/**
+ * Representation Information for the Button
+ */
+export type ButtonElement = {
+  title: string;
+  subtitle: string;
+  description: string;
+  color: Color;
+};
+
+/**
+ * Represesntation of a Course from the Overworld Backend
+ */
+export interface Course {
+  id: number;
+  courseName: string;
+  semester: string;
+  description: string;
+  active: boolean;
+}
