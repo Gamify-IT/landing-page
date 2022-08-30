@@ -14,7 +14,7 @@ const setupColor = Color.WARNING;
 
 auth.testLogin();
 
-var courses = ref<Course[]>();
+const courses = ref<Course[]>();
 getActiveCourses().then((fetchedCourses) => {
   courses.value = fetchedCourses;
 });
