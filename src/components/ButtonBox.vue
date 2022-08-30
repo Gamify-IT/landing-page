@@ -7,16 +7,11 @@ defineProps<{
 
 <template>
   <div id="button-box" :class="buttonElement.color">
-    <div class="text-center position-relative top-50 start-50 translate-middle">
+    <div class="text-center position-relative top-50 start-50 translate-middle" :title="buttonElement.description">
       <h4>{{ buttonElement.title }}</h4>
       <div>{{ buttonElement.subtitle }}</div>
     </div>
   </div>
-  <!-- <b-popover v-if="buttonElement.description" target="button-box" triggers="hover" placement="bottom" variant="info">
-    {{ buttonElement.description }}
-  </b-popover> 
-  TODO if enabled to @click function is not workingg anymore. Find a solution
-  -->
 </template>
 
 <style scoped>
