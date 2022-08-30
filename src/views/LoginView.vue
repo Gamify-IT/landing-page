@@ -35,6 +35,9 @@ redirectIfUserIsSignedIn();
       </b-col>
     </b-row>
   </b-container>
+  <div class="text-center">
+    <a href="/third-party-license-notice/" class="text-body">Third Party Licenses</a>
+  </div>
 </template>
 
 <style lang="css">
