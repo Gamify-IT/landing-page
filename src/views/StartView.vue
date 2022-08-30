@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import ButtonBox from '@/components/ButtonBox.vue';
+import LogoutButton from '@/components/LogoutButton.vue';
 import { Color, Course, ButtonElement } from '@/types/index';
 import { getActiveCourses } from '@/ts/start';
 import config from '@/config';
 import { ref } from 'vue';
 import store from '@/store';
 import router from '@/router';
+import { auth } from '@/ts/auth';
 
 const courseColor = Color.PRIMARY;
 const setupColor = Color.WARNING;
+
+auth.testLogin();
 
 var courses = ref<Course[]>();
 getActiveCourses().then((fetchedCourses) => {
@@ -44,7 +48,8 @@ function openSite(url: string) {
 </script>
 
 <template>
-  <div class="w-75 m-auto">
+  <div class="w-75 my-3 mx-auto">
+    <LogoutButton />
     <h1 class="display-1">Gamify-IT</h1>
 
     <h2>Play</h2>

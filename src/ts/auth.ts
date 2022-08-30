@@ -2,6 +2,7 @@ import { TokenResponse } from '@/types';
 import store from '@/store';
 import { keycloak } from '@/ts/keycloak-rest-client';
 import config from '@/config';
+import router from '@/router';
 
 /**
  * Authenticates the user with Keycloak.
@@ -90,6 +91,13 @@ class Auth {
       } catch (e) {
         console.log('user not authenticated', e);
       }
+    }
+  }
+
+  async testLogin() {
+    const result = await this.tryUpdateUserInfo();
+    if (!result) {
+      router.push({ name: 'Login' });
     }
   }
 }

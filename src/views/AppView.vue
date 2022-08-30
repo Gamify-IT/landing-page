@@ -3,6 +3,9 @@ import router from '@/router';
 import { loadIframe } from '@/ts/iframeLoader';
 import { onMounted, ref } from 'vue';
 import store from '@/store';
+import { auth } from '@/ts/auth';
+
+auth.testLogin();
 
 const started = ref(false);
 
