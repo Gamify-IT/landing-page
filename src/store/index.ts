@@ -25,7 +25,7 @@ export default createStore({
       state.refreshToken = localStorage.getItem(localStorageKeys.refreshToken) || '';
       state.idToken = localStorage.getItem(localStorageKeys.idToken) || '';
       state.preferredUsername = localStorage.getItem(localStorageKeys.preferredUsername) || '';
-      state.appUrl = localStorage.getItem(localStorageKeys.preferredUsername) || '';
+      state.appUrl = localStorage.getItem(localStorageKeys.appUrl) || '';
     },
     setAccessToken(state, accessToken: { token: string; expiresIn: number }) {
       const d = new Date();

@@ -14,6 +14,7 @@ async function startApp() {
   if (url == undefined || url == '') {
     await router.push({ name: 'Start' });
   } else {
+    console.log('open ' + url);
     loadIframe(url);
     started.value = true;
   }
