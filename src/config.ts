@@ -11,20 +11,11 @@ export default {
       /**
        * Name of the cookie that stores the authentication token.
        */
-      name: 'token',
+      name: 'access_token',
       /**
        * Options for the cookie.
        */
       options: 'SameSite=strict; path=/',
-    },
-    /**
-     * Keys for the local storage.
-     */
-    localStorageKeys: {
-      preferredUsername: 'username',
-      accessToken: 'token',
-      refreshToken: 'refreshToken',
-      idToken: 'idToken',
     },
     /**
      * Keycloak configuration.
@@ -40,4 +31,7 @@ export default {
       clientId: 'game',
     },
   },
+  overworldBackendBaseUrl: '/overworld/api/v1',
+  overworldBaseUrl: '/overworld/',
+  lecturerInterfaceBaseUrl: '/lecturer-interface/',
 };

@@ -1,25 +1,33 @@
 <script setup lang="ts">
-import '@/load-app-script.js';
+import router from '@/router';
+import { loadIframe } from '@/ts/iframeLoader';
 import { onMounted, ref } from 'vue';
 import store from '@/store';
+import { auth } from '@/ts/auth';
+
+auth.testLogin();
 
 const started = ref(false);
 
-function startGame() {
-  started.value = true;
-  // window.microServices.loadService('overworld/');
-  console.log('Started microservice');
+async function startApp() {
+  const url = store.state.appUrl;
+  if (url == undefined || url == '') {
+    await router.push({ name: 'Start' });
+  } else {
+    console.log('open ' + url);
+    loadIframe(url);
+    started.value = true;
+  }
 }
 
-onMounted(() => {
-  startGame();
+onMounted(async () => {
+  await startApp();
 });
 </script>
 
 <template>
   <div>
-    <h1>Welcome to the game, "{{ store.state.preferredUsername }}"</h1>
-
-    <div id="micro-service-wrapper"></div>
+    <b-button v-if="started === false" class="btn-primary" v-on:click="startApp()"> Start </b-button>
+    <div id="iframe-wrapper"></div>
   </div>
 </template>
