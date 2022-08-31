@@ -19,6 +19,6 @@ describe('LoginView.vue', () => {
   });
   test('Login Button', async () => {
     // const loginButton = wrapper.findComponent(BButton);
-    // expect(loginButton.text().includes('login')); 
+    // expect(loginButton.text().includes('login'));
   });
 });

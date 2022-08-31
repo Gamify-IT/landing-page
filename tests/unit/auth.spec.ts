@@ -4,7 +4,6 @@ import config from '@/config';
 import { keycloak } from '@/ts/keycloak-rest-client';
 import { auth } from '@/ts/auth';
 
-
 const openIDConfig = {
   issuer: 'http://localhost/keycloak/realms/Gamify-IT',
   authorization_endpoint: 'http://localhost/keycloak/realms/Gamify-IT/protocol/openid-connect/auth',
@@ -21,7 +20,8 @@ describe('auth.ts', () => {
     expect(mockAxios.get).toHaveBeenCalledWith(config.auth.keycloak.configurationURL);
   });
 
-  test('Keycloak Token fetch', async () => { //TODO, I didn't get mockAxios working as expected
+  test('Keycloak Token fetch', async () => {
+    //TODO, I didn't get mockAxios working as expected
     // const authorizationCode = 'test';
     // auth.tryGetAccessTokenWithCode(authorizationCode);
     // const tokenRequestParams = new URLSearchParams();
@@ -29,6 +29,6 @@ describe('auth.ts', () => {
     // tokenRequestParams.append('code', authorizationCode);
     // tokenRequestParams.append('client_id', 'game');
     // tokenRequestParams.append('redirect_uri', 'http://localhost/');
-    // expect(mockAxios.post).toHaveBeenCalledWith(openIDConfig.token_endpoint, tokenRequestParams); 
+    // expect(mockAxios.post).toHaveBeenCalledWith(openIDConfig.token_endpoint, tokenRequestParams);
   });
 });

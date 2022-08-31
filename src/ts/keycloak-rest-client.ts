@@ -36,7 +36,6 @@ class Keycloak {
    */
   async configure() {
     this._openIdConfig = (await axios.get(config.auth.keycloak.configurationURL)).data;
-    
   }
 
   /**
