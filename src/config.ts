@@ -24,7 +24,7 @@ export default {
       /**
        * URI to fetch the openid-connect configuration.
        */
-      configurationURL: 'http://localhost/keycloak/realms/Gamify-IT/.well-known/openid-configuration',
+      configurationURL: '/keycloak/realms/Gamify-IT/.well-known/openid-configuration',
       /**
        * The Keycloak client id.
        */
