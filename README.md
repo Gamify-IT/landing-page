@@ -10,7 +10,7 @@ For now, it only contains a link to the login page.
 
 ```bash
 # Start database, login-backend and reverse-proxy in background
-docker-compose -f docker-compose.dev.yml up --detach
+docker-compose -f docker-compose-dev.yaml up --detach
 
 # Build project with hot-reload
 npm run serve
