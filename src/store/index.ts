@@ -52,10 +52,12 @@ export default createStore({
       localStorage.removeItem(localStorageKeys.refreshToken);
       localStorage.removeItem(localStorageKeys.idToken);
       localStorage.removeItem(localStorageKeys.preferredUsername);
+      localStorage.removeItem(localStorageKeys.userId);
       state.accessToken = '';
       state.refreshToken = '';
       state.idToken = '';
       state.preferredUsername = '';
+      state.userId = '';
     },
     setPreferredUsername(state, preferredUsername) {
       localStorage.setItem(localStorageKeys.preferredUsername, preferredUsername);
