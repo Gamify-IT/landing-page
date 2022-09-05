@@ -54,6 +54,7 @@ class Auth {
     try {
       const userResult = await keycloak.fetchUser(store.state.accessToken);
       store.commit('setPreferredUsername', userResult.preferred_username);
+      store.commit('setUserId', userResult.sub);
       console.log('user authenticated:', userResult);
       return true;
     } catch (e) {

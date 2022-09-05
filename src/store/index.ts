@@ -3,6 +3,7 @@ import config from '@/config';
 
 const localStorageKeys = {
   preferredUsername: 'username',
+  userId: 'userId',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
   idToken: 'idToken',
@@ -12,6 +13,7 @@ const localStorageKeys = {
 export default createStore({
   state: {
     preferredUsername: '',
+    userId: '',
     accessToken: '',
     refreshToken: '',
     idToken: '',
@@ -20,11 +22,11 @@ export default createStore({
   getters: {},
   mutations: {
     init(state) {
-      console.log('init vuex');
       state.accessToken = localStorage.getItem(localStorageKeys.accessToken) || '';
       state.refreshToken = localStorage.getItem(localStorageKeys.refreshToken) || '';
       state.idToken = localStorage.getItem(localStorageKeys.idToken) || '';
       state.preferredUsername = localStorage.getItem(localStorageKeys.preferredUsername) || '';
+      state.userId = localStorage.getItem(localStorageKeys.userId) || '';
       state.appUrl = localStorage.getItem(localStorageKeys.appUrl) || '';
     },
     setAccessToken(state, accessToken: { token: string; expiresIn: number }) {
@@ -58,6 +60,10 @@ export default createStore({
     setPreferredUsername(state, preferredUsername) {
       localStorage.setItem(localStorageKeys.preferredUsername, preferredUsername);
       state.preferredUsername = preferredUsername;
+    },
+    setUserId(state, userId) {
+      localStorage.setItem(localStorageKeys.userId, userId);
+      state.userId = userId;
     },
     setAppUrl(state, appUrl) {
       localStorage.setItem(localStorageKeys.appUrl, appUrl);
