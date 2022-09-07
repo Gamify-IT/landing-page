@@ -36,7 +36,7 @@ function courseToButtonElement(course: Course): ButtonElement {
 }
 
 function selectCourse(id: number) {
-  const url = config.overworldBaseUrl + '#' + id;
+  const url = config.overworldBaseUrl + id;
   openSite(url);
 }
 
