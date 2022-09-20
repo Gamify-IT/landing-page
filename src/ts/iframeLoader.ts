@@ -6,6 +6,13 @@ export function loadIframe(url: string) {
   iframe.style.left = '0';
   iframe.style.width = '100%';
   iframe.style.height = '100%';
+  window.addEventListener('message', (event) => {
+    // FIXME: validate event origin
+    if (event.data === 'CLOSE ME') {
+      iframe.remove();
+    }
+  });
+
   const iframeWrapper = document.getElementById('iframe-wrapper');
   if (iframeWrapper != null) {
     iframeWrapper.appendChild(iframe);
