@@ -9,7 +9,11 @@ export function loadIframe(url: string) {
   window.addEventListener('message', (event) => {
     // FIXME: validate event origin
     if (event.data === 'CLOSE ME') {
-      iframe.remove();
+      const iframe = document.querySelector('#iframe-wrapper>iframe');
+      if (iframe != null) {
+        iframe.remove();
+        window.open('/start', '_self');
+      }
     }
   });
 
