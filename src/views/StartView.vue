@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import ButtonBox from '@/components/ButtonBox.vue';
 import LogoutButton from '@/components/LogoutButton.vue';
-import { ButtonElement, Color, Course } from '@/types/index';
+import { ButtonElement, Color, Course } from '@/types';
 import { getActiveCourses } from '@/ts/start';
 import config from '@/config';
 import { ref } from 'vue';
@@ -59,8 +59,8 @@ function openSite(url: string) {
           <div v-for="course in courses" v-bind:key="course.id">
             <ButtonBox :button-element="courseToButtonElement(course)" @click="selectCourse(course.id)" />
           </div>
-          <div v-if="courses == undefined" class="display-6">Loading...</div>
-          <div v-else-if="courses.length == 0" class="display-6">Nothing to show :(</div>
+          <div v-if="!courses" class="display-6">Loading...</div>
+          <div v-else-if="courses.length === 0" class="display-6">Nothing to show :(</div>
         </div>
       </div>
     </div>
