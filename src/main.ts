@@ -11,6 +11,7 @@ import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 import { auth } from '@/ts/auth';
 import { keycloak } from '@/ts/keycloak-rest-client';
+import config from '@/config';
 
 router.beforeEach(async (to, _from, next) => {
   await auth.tryRenewAccessToken();
@@ -18,13 +19,13 @@ router.beforeEach(async (to, _from, next) => {
 
   if (isLoggedIn && to.name == 'Login') {
     console.log('STATUS: user is logged in, redirect to app');
-    next({ name: 'App' });
-  } else if (!isLoggedIn && to.name == 'App') {
+    next({ name: 'Start' });
+  } else if (!isLoggedIn && config.auth.protectedRoutes.includes(to.name as string)) {
     console.log('STATUS: user is not logged in, redirect to login');
     next({ name: 'Login' });
   } else if (to.name == 'Not-Found') {
     console.log('STATUS: not found');
-    next({ name: 'App' });
+    next({ name: 'Start' });
   } else {
     console.log('STATUS: do nothing', to.name);
     next();

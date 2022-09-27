@@ -1,6 +1,11 @@
 export default {
   auth: {
     /**
+     * The routes that can only be viewed by authenticated users.
+     * The list contains names of routes from router/index.ts.
+     */
+    protectedRoutes: ['Start', 'App'],
+    /**
      * The token is renewed renewSecondsBeforeTimeout before the access token expires.
      */
     renewSecondsBeforeTimeout: 10,
