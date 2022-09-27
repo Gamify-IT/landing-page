@@ -4,6 +4,7 @@ import config from '@/config';
 const localStorageKeys = {
   preferredUsername: 'username',
   userId: 'userId',
+  roles: 'roles',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
   idToken: 'idToken',
@@ -14,6 +15,7 @@ export default createStore({
   state: {
     preferredUsername: '',
     userId: '',
+    roles: [] as string[],
     accessToken: '',
     refreshToken: '',
     idToken: '',
@@ -22,11 +24,12 @@ export default createStore({
   getters: {},
   mutations: {
     init(state) {
+      state.preferredUsername = localStorage.getItem(localStorageKeys.preferredUsername) || '';
+      state.userId = localStorage.getItem(localStorageKeys.userId) || '';
+      state.roles = JSON.parse(localStorage.getItem(localStorageKeys.roles) || '[]');
       state.accessToken = localStorage.getItem(localStorageKeys.accessToken) || '';
       state.refreshToken = localStorage.getItem(localStorageKeys.refreshToken) || '';
       state.idToken = localStorage.getItem(localStorageKeys.idToken) || '';
-      state.preferredUsername = localStorage.getItem(localStorageKeys.preferredUsername) || '';
-      state.userId = localStorage.getItem(localStorageKeys.userId) || '';
       state.appUrl = localStorage.getItem(localStorageKeys.appUrl) || '';
     },
     setAccessToken(state, accessToken: { token: string; expiresIn: number }) {
@@ -53,11 +56,13 @@ export default createStore({
       localStorage.removeItem(localStorageKeys.idToken);
       localStorage.removeItem(localStorageKeys.preferredUsername);
       localStorage.removeItem(localStorageKeys.userId);
+      localStorage.removeItem(localStorageKeys.roles);
       state.accessToken = '';
       state.refreshToken = '';
       state.idToken = '';
       state.preferredUsername = '';
       state.userId = '';
+      state.roles = [];
     },
     setPreferredUsername(state, preferredUsername) {
       localStorage.setItem(localStorageKeys.preferredUsername, preferredUsername);
@@ -70,6 +75,10 @@ export default createStore({
     setAppUrl(state, appUrl) {
       localStorage.setItem(localStorageKeys.appUrl, appUrl);
       state.appUrl = appUrl;
+    },
+    setRoles(state, roles) {
+      localStorage.setItem(localStorageKeys.roles, JSON.stringify(roles));
+      state.roles = roles;
     },
     resetAppUrl(state) {
       const appUrl = '';

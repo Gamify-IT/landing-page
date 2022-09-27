@@ -14,33 +14,6 @@ class Auth {
   private timeout: NodeJS.Timeout | null = null;
 
   /**
-   * Apply the authentication result to the store and start automatic token renewal.
-   * @param result The authentication result.
-   * @private
-   */
-  private applyAuthenticationResult(result: TokenResponse) {
-    store.commit('setAccessToken', { token: result.access_token, expiresIn: result.expires_in });
-    store.commit('setRefreshToken', result.refresh_token);
-    store.commit('setIdToken', result.id_token);
-
-    const timoutSeconds = result.expires_in - config.auth.renewSecondsBeforeTimeout;
-    this.startAutoRenew(timoutSeconds);
-  }
-
-  /**
-   * Start automatic token renewal.
-   * @param renewInSeconds The time in seconds until the token should be renewed.
-   * @private
-   */
-  private startAutoRenew(renewInSeconds: number) {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-      this.timeout = null;
-    }
-    this.timeout = setTimeout(() => this.tryRenewAccessToken(), renewInSeconds * 1000);
-  }
-
-  /**
    * Try to fetch the user information using the access token.
    * Returns true if the user is authenticated.
    */
@@ -55,6 +28,7 @@ class Auth {
       const userResult = await keycloak.fetchUser(store.state.accessToken);
       store.commit('setPreferredUsername', userResult.preferred_username);
       store.commit('setUserId', userResult.sub);
+      store.commit('setRoles', userResult.realm_access.roles);
       console.log('user authenticated:', userResult);
       return true;
     } catch (e) {
@@ -100,6 +74,33 @@ class Auth {
     if (!result) {
       router.push({ name: 'Login' });
     }
+  }
+
+  /**
+   * Apply the authentication result to the store and start automatic token renewal.
+   * @param result The authentication result.
+   * @private
+   */
+  private applyAuthenticationResult(result: TokenResponse) {
+    store.commit('setAccessToken', { token: result.access_token, expiresIn: result.expires_in });
+    store.commit('setRefreshToken', result.refresh_token);
+    store.commit('setIdToken', result.id_token);
+
+    const timoutSeconds = result.expires_in - config.auth.renewSecondsBeforeTimeout;
+    this.startAutoRenew(timoutSeconds);
+  }
+
+  /**
+   * Start automatic token renewal.
+   * @param renewInSeconds The time in seconds until the token should be renewed.
+   * @private
+   */
+  private startAutoRenew(renewInSeconds: number) {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
+    this.timeout = setTimeout(() => this.tryRenewAccessToken(), renewInSeconds * 1000);
   }
 }
 
