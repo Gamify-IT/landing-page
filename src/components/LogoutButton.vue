@@ -1,16 +1,11 @@
-<script setup lang="ts">
-import { ButtonElement } from '@/types/index';
+<script lang="ts" setup>
 import store from '@/store';
 import { keycloak } from '@/ts/keycloak-rest-client';
 import router from '@/router';
 
-defineProps<{
-  buttonElement: ButtonElement;
-}>();
-
 async function logout() {
   await keycloak.logout(store.state.refreshToken);
-  router.push({ name: 'Login' });
+  await router.push({ name: 'Login' });
 }
 </script>
 

@@ -39,4 +39,5 @@ export default {
   overworldBackendBaseUrl: '/overworld/api/v1',
   overworldBaseUrl: '/overworld/',
   lecturerInterfaceBaseUrl: '/lecturer-interface/',
+  keycloakAdminUrl: '/keycloak/admin/',
 };
