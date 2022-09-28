@@ -68,7 +68,7 @@ class KeycloakConfiguration {
    * Fetch the OpenID configuration.
    * @private
    */
-  async _loadOpenIDConfiguration(): Promise<void> {
+  private async _loadOpenIDConfiguration(): Promise<void> {
     this._isLoading.value = true;
     try {
       this._openIdConfig = (await axios.get(config.auth.keycloak.configurationURL)).data;
