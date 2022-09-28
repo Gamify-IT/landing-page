@@ -10,10 +10,11 @@ import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 import { auth } from '@/ts/auth';
-import { keycloak } from '@/ts/keycloak-rest-client';
 import config from '@/config';
+import { keycloakConfiguration } from '@/ts/keycloak-configuration';
 
 router.beforeEach(async (to, _from, next) => {
+  await keycloakConfiguration.configurationComplete;
   await auth.tryRenewAccessToken();
   const isLoggedIn = await auth.tryUpdateUserInfo();
 
@@ -34,7 +35,8 @@ router.beforeEach(async (to, _from, next) => {
 
 async function main() {
   await store.commit('init');
-  await keycloak.configure();
+  keycloakConfiguration.startConfiguration();
+
   const app = createApp(App);
 
   app.use(BootstrapVue3);

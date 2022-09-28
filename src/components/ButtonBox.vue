@@ -1,15 +1,19 @@
-<script setup lang="ts">
-import { ButtonElement } from '@/types/index';
+<script lang="ts" setup>
 defineProps<{
-  buttonElement: ButtonElement;
+  color: string;
+  description: string;
 }>();
 </script>
 
 <template>
-  <div id="button-box" :class="buttonElement.color">
-    <div class="text-center position-relative top-50 start-50 translate-middle" :title="buttonElement.description">
-      <h4>{{ buttonElement.title }}</h4>
-      <div>{{ buttonElement.subtitle }}</div>
+  <div id="button-box" :class="color">
+    <div :title="description" class="text-center position-relative top-50 start-50 translate-middle">
+      <h4>
+        <slot name="title" />
+      </h4>
+      <div>
+        <slot name="subtitle" />
+      </div>
     </div>
   </div>
 </template>

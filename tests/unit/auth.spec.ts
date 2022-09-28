@@ -1,8 +1,6 @@
-import { mount, VueWrapper, flushPromises } from '@vue/test-utils';
 import mockAxios from '@/__mocks__/axios';
 import config from '@/config';
-import { keycloak } from '@/ts/keycloak-rest-client';
-import { auth } from '@/ts/auth';
+import { keycloakConfiguration } from '@/ts/keycloak-configuration';
 
 const openIDConfig = {
   issuer: 'http://localhost/keycloak/realms/Gamify-IT',
@@ -16,7 +14,7 @@ const openIDConfig = {
 describe('auth.ts', () => {
   beforeEach(async () => {
     mockAxios.get.mockResolvedValueOnce(openIDConfig);
-    await keycloak.configure();
+    await keycloakConfiguration.startConfiguration();
     expect(mockAxios.get).toHaveBeenCalledWith(config.auth.keycloak.configurationURL);
   });
 

@@ -2,22 +2,32 @@
 import ButtonBox from '@/components/ButtonBox.vue';
 import LogoutButton from '@/components/LogoutButton.vue';
 import { ButtonElement, Color, Course } from '@/types';
-import { getActiveCourses } from '@/ts/start';
 import config from '@/config';
 import { ref } from 'vue';
 import store from '@/store';
 import router from '@/router';
 import { auth } from '@/ts/auth';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import { getActiveCourses } from '@/ts/start';
 
 const courseColor = Color.PRIMARY;
-const setupColor = Color.WARNING;
+const setupColor = Color.INFO;
+const placeholderColor = Color.LIGHT;
+const warningColor = Color.WARNING;
+
+let courseFetchFailed = ref(false);
 
 auth.testLogin();
 
 const courses = ref<Course[]>();
-getActiveCourses().then((fetchedCourses) => {
-  courses.value = fetchedCourses;
-});
+getActiveCourses()
+  .then((fetchedCourses) => {
+    courses.value = fetchedCourses;
+  })
+  .catch((error) => {
+    console.error('Error while fetching courses: ', error);
+    courseFetchFailed.value = true;
+  });
 
 const lecturerInterface: ButtonElement = {
   title: 'Lecturer Interface',
@@ -32,15 +42,6 @@ const keycloakAdminInterface: ButtonElement = {
   description: '',
   color: setupColor,
 };
-
-function courseToButtonElement(course: Course): ButtonElement {
-  return {
-    title: course.courseName,
-    subtitle: course.semester,
-    description: course.description,
-    color: courseColor,
-  };
-}
 
 function selectCourse(id: number) {
   const url = config.overworldBaseUrl + id;
@@ -62,12 +63,33 @@ function openSite(url: string) {
     <div>
       <h2>Play</h2>
       <div class="m-2">
-        <div class="d-flex flex-wrap justify-content-start">
+        <div v-if="courses" class="d-flex flex-wrap justify-content-start">
           <div v-for="course in courses" v-bind:key="course.id">
-            <ButtonBox :button-element="courseToButtonElement(course)" @click="selectCourse(course.id)" />
+            <ButtonBox :color="courseColor" :description="course.description" @click="selectCourse(course.id)">
+              <template #title>{{ course.courseName }}</template>
+              <template #subtitle>{{ course.semester }}</template>
+            </ButtonBox>
           </div>
-          <div v-if="!courses" class="display-6">Loading...</div>
-          <div v-else-if="courses.length === 0" class="display-6">Nothing to show :(</div>
+          <div v-if="courses && courses.length === 0" class="display-6">
+            <h4>No courses available</h4>
+          </div>
+        </div>
+        <div v-else-if="courseFetchFailed" class="d-flex flex-wrap justify-content-start">
+          <div>
+            <ButtonBox :color="warningColor" description="Loading">
+              <template #title>Unable to contact server</template>
+              <template #subtitle>Please try again later</template>
+            </ButtonBox>
+          </div>
+        </div>
+        <div v-else class="d-flex flex-wrap justify-content-start">
+          <div v-for="i in 3" v-bind:key="i">
+            <ButtonBox :color="placeholderColor" description="Loading">
+              <template #subtitle>
+                <LoadingSpinner />
+              </template>
+            </ButtonBox>
+          </div>
         </div>
       </div>
     </div>
@@ -76,9 +98,19 @@ function openSite(url: string) {
       <h2>Setup</h2>
       <div class="m-2">
         <div class="d-flex flex-wrap justify-content-start">
-          <ButtonBox :button-element="lecturerInterface" @click="openSite(config.lecturerInterfaceBaseUrl)" />
+          <ButtonBox
+            :color="lecturerInterface.color"
+            :description="lecturerInterface.description"
+            @click="openSite(config.lecturerInterfaceBaseUrl)"
+          >
+            <template #title>{{ lecturerInterface.title }}</template>
+            <template #subtitle>{{ lecturerInterface.subtitle }}</template>
+          </ButtonBox>
           <a :href="config.keycloakAdminUrl" class="link-card-wrapper" target="_blank">
-            <ButtonBox :button-element="keycloakAdminInterface" />
+            <ButtonBox :color="keycloakAdminInterface.color" :description="keycloakAdminInterface.description">
+              <template #title>{{ keycloakAdminInterface.title }}</template>
+              <template #subtitle>{{ keycloakAdminInterface.subtitle }}</template>
+            </ButtonBox>
           </a>
         </div>
       </div>

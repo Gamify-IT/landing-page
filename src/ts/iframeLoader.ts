@@ -1,3 +1,5 @@
+import router from '@/router';
+
 export function loadIframe(url: string) {
   const iframe = document.createElement('iframe');
   iframe.src = url;
@@ -12,7 +14,7 @@ export function loadIframe(url: string) {
       const iframe = document.querySelector('#iframe-wrapper>iframe');
       if (iframe != null) {
         iframe.remove();
-        window.open('/start', '_self');
+        router.push({ name: 'Start' });
       }
     }
   });
