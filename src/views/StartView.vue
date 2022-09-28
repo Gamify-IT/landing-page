@@ -26,6 +26,13 @@ const lecturerInterface: ButtonElement = {
   color: setupColor,
 };
 
+const keycloakAdminInterface: ButtonElement = {
+  title: 'User Management',
+  subtitle: 'manage users in Keycloak',
+  description: '',
+  color: setupColor,
+};
+
 function courseToButtonElement(course: Course): ButtonElement {
   return {
     title: course.courseName,
@@ -70,8 +77,28 @@ function openSite(url: string) {
       <div class="m-2">
         <div class="d-flex flex-wrap justify-content-start">
           <ButtonBox :button-element="lecturerInterface" @click="openSite(config.lecturerInterfaceBaseUrl)" />
+          <a :href="config.keycloakAdminUrl" class="link-card-wrapper" target="_blank">
+            <ButtonBox :button-element="keycloakAdminInterface" />
+          </a>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style lang="css">
+.link-card-wrapper {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-card-wrapper:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-card-wrapper:visited {
+  text-decoration: none;
+  color: inherit;
+}
+</style>
