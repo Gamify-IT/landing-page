@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import config from '@/config';
 import type { OpenIDConfiguration, TokenResponse, UserResponse } from '@/types/';
+import { ref } from 'vue';
 
 /**
  * Client for the Keycloak REST API.
@@ -15,13 +16,47 @@ class Keycloak {
   private _openIdConfig: OpenIDConfiguration | null = null;
 
   /**
+   * Check if the configuration for the login is loaded.
+   * @private
+   */
+  private _isLoading = ref<boolean>(false);
+
+  get isLoading() {
+    return this._isLoading;
+  }
+
+  /**
+   * Check if the configuration for the login is loaded.
+   * @private
+   */
+  private _isConfigured = ref<boolean>(false);
+
+  /**
+   * Check if the client is loaded.
+   */
+  get isConfigured() {
+    return this._isConfigured;
+  }
+
+  /**
    * Getter for safe access to the OpenID configuration.
+   * @throws Error if the configuration is not yet loaded.
    */
   get openIDConfig(): OpenIDConfiguration {
     if (!this._openIdConfig) {
       throw new Error('OpenID configuration not configured');
     }
     return this._openIdConfig;
+  }
+
+  /**
+   * The URI for the login with configuration parameters
+   * @Throws Error if the configuration is not yet loaded.
+   */
+  get loginUri() {
+    const encodedReturnUri = encodeURIComponent(this.returnUri);
+
+    return `${this.openIDConfig.authorization_endpoint}?client_id=${config.auth.keycloak.clientId}&redirect_uri=${encodedReturnUri}&response_type=code&scope=openid`;
   }
 
   /**
@@ -33,18 +68,25 @@ class Keycloak {
 
   /**
    * Fetch the OpenID configuration.
+   * @throws Error if the configuration could not be fetched.
    */
-  async configure() {
-    this._openIdConfig = (await axios.get(config.auth.keycloak.configurationURL)).data;
+  configure() {
+    this._loadOpenIDConfiguration();
   }
 
   /**
-   * The URI for the login with configuration parameters
+   * Fetch the OpenID configuration.
+   * @private
    */
-  get loginUri() {
-    const encodedReturnUri = encodeURIComponent(this.returnUri);
-
-    return `${this.openIDConfig.authorization_endpoint}?client_id=${config.auth.keycloak.clientId}&redirect_uri=${encodedReturnUri}&response_type=code&scope=openid`;
+  async _loadOpenIDConfiguration(): Promise<void> {
+    this._isLoading.value = true;
+    try {
+      this._openIdConfig = (await axios.get(config.auth.keycloak.configurationURL)).data;
+      this._isConfigured.value = true;
+    } catch (e) {
+      console.error('Could not fetch OpenID configuration', e);
+    }
+    this._isLoading.value = false;
   }
 
   /**
