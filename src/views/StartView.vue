@@ -11,15 +11,23 @@ import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { getActiveCourses } from '@/ts/start';
 
 const courseColor = Color.PRIMARY;
-const setupColor = Color.WARNING;
+const setupColor = Color.INFO;
 const placeholderColor = Color.LIGHT;
+const warningColor = Color.WARNING;
+
+let courseFetchFailed = ref(false);
 
 auth.testLogin();
 
 const courses = ref<Course[]>();
-getActiveCourses().then((fetchedCourses) => {
-  courses.value = fetchedCourses;
-});
+getActiveCourses()
+  .then((fetchedCourses) => {
+    courses.value = fetchedCourses;
+  })
+  .catch((error) => {
+    console.error('Error while fetching courses: ', error);
+    courseFetchFailed.value = true;
+  });
 
 const lecturerInterface: ButtonElement = {
   title: 'Lecturer Interface',
@@ -66,7 +74,14 @@ function openSite(url: string) {
             <h4>No courses available</h4>
           </div>
         </div>
-
+        <div v-else-if="courseFetchFailed" class="d-flex flex-wrap justify-content-start">
+          <div>
+            <ButtonBox :color="warningColor" description="Loading">
+              <template #title>Unable to contact server</template>
+              <template #subtitle>Please try again later</template>
+            </ButtonBox>
+          </div>
+        </div>
         <div v-else class="d-flex flex-wrap justify-content-start">
           <div v-for="i in 3" v-bind:key="i">
             <ButtonBox :color="placeholderColor" description="Loading">
