@@ -4,8 +4,9 @@ import store from '@/store';
 import { QueryParams } from '@/ts/query';
 import { auth } from '@/ts/auth';
 import router from '@/router';
+import { keycloakConfiguration } from '@/ts/keycloak-configuration';
 
-const keycloakIsConfigured = keycloak.isConfigured;
+const keycloakIsConfigured = keycloakConfiguration.isConfigured;
 
 async function redirectIfUserIsSignedIn() {
   await auth.tryGetAccessTokenWithCode(QueryParams.get('code'));
