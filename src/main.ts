@@ -34,7 +34,7 @@ router.beforeEach(async (to, _from, next) => {
 });
 
 async function main() {
-  await store.commit('init');
+  store.commit('init');
   keycloakConfiguration.startConfiguration();
 
   const app = createApp(App);

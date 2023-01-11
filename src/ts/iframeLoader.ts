@@ -11,9 +11,9 @@ export function loadIframe(url: string) {
   window.addEventListener('message', (event) => {
     // FIXME: validate event origin
     if (event.data === 'CLOSE ME') {
-      const iframe = document.querySelector('#iframe-wrapper>iframe');
-      if (iframe != null) {
-        iframe.remove();
+      const iframeToClose = document.querySelector('#iframe-wrapper>iframe');
+      if (iframeToClose != null) {
+        iframeToClose.remove();
         router.push({ name: 'Start' });
       }
     }
