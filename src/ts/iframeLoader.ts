@@ -16,6 +16,11 @@ export function loadIframe(url: string, focus = true) {
         iframe.remove();
         router.push({ name: 'Start' });
       }
+    } else if (event.data === 'FOCUS ME') {
+      const iframe: HTMLIFrameElement | null = document.querySelector('#iframe-wrapper>iframe');
+      if (iframe != null) {
+        iframe.contentWindow?.focus();
+      }
     }
   });
 
