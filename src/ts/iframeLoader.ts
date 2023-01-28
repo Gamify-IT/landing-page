@@ -1,6 +1,6 @@
 import router from '@/router';
 
-export function loadIframe(url: string) {
+export function loadIframe(url: string, focus = true) {
   const iframe = document.createElement('iframe');
   iframe.src = url;
   iframe.style.position = 'fixed';
@@ -16,6 +16,11 @@ export function loadIframe(url: string) {
         iframe.remove();
         router.push({ name: 'Start' });
       }
+    } else if (event.data === 'FOCUS ME') {
+      const iframe: HTMLIFrameElement | null = document.querySelector('#iframe-wrapper>iframe');
+      if (iframe != null) {
+        iframe.contentWindow?.focus();
+      }
     }
   });
 
@@ -24,5 +29,8 @@ export function loadIframe(url: string) {
     iframeWrapper.appendChild(iframe);
   } else {
     throw new Error('iframe wrapper not found!');
+  }
+  if (focus) {
+    iframe.contentWindow?.focus();
   }
 }
