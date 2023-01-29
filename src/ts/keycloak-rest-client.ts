@@ -72,7 +72,7 @@ class Keycloak {
     params.append('client_id', config.auth.keycloak.clientId);
     const response = await axios.post(keycloakConfiguration.openIDConfig.end_session_endpoint, params);
     if (response.status < 200 || response.status > 206) {
-      throw 'Error in logout, status code ' + response.status;
+      throw new Error('Error in logout, status code ' + response.status);
     }
   }
 }
