@@ -8,7 +8,7 @@ import store from '@/store';
 import router from '@/router';
 import { auth } from '@/ts/auth';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import { getActiveCourses } from '@/ts/start';
+import { createPlayerIfNotExists, getActiveCourses } from '@/ts/start';
 
 const courseColor = Color.PRIMARY;
 const setupColor = Color.INFO;
@@ -18,6 +18,11 @@ const warningColor = Color.WARNING;
 let courseFetchFailed = ref(false);
 
 auth.testLogin();
+
+createPlayerIfNotExists().catch(() => {
+  courseFetchFailed.value = true;
+  alert('Error while creating Player, please try again later or contact your IT admin');
+});
 
 const courses = ref<Course[]>();
 getActiveCourses()
@@ -63,7 +68,15 @@ function openSite(url: string) {
     <div>
       <h2>Play</h2>
       <div class="m-2">
-        <div v-if="courses" class="d-flex flex-wrap justify-content-start">
+        <div v-if="courseFetchFailed" class="d-flex flex-wrap justify-content-start">
+          <div>
+            <ButtonBox :color="warningColor" description="Loading">
+              <template #title>Unable to contact server</template>
+              <template #subtitle>Please try again later</template>
+            </ButtonBox>
+          </div>
+        </div>
+        <div v-else-if="courses" class="d-flex flex-wrap justify-content-start">
           <div v-for="course in courses" v-bind:key="course.id">
             <ButtonBox :color="courseColor" :description="course.description" @click="selectCourse(course.id)">
               <template #title>{{ course.courseName }}</template>
@@ -72,14 +85,6 @@ function openSite(url: string) {
           </div>
           <div v-if="courses && courses.length === 0" class="display-6">
             <h4>No courses available</h4>
-          </div>
-        </div>
-        <div v-else-if="courseFetchFailed" class="d-flex flex-wrap justify-content-start">
-          <div>
-            <ButtonBox :color="warningColor" description="Loading">
-              <template #title>Unable to contact server</template>
-              <template #subtitle>Please try again later</template>
-            </ButtonBox>
           </div>
         </div>
         <div v-else class="d-flex flex-wrap justify-content-start">
