@@ -21,7 +21,7 @@ auth.testLogin();
 
 createPlayerIfNotExists().catch(() => {
   courseFetchFailed.value = true;
-  alert('Error while creating Player, please try again later or contact your IT admin');
+  alert('An error occurred while creating your player. Please try again later, or contact the admin of your site.');
 });
 
 const courses = ref<Course[]>();
