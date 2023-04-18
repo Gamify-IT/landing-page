@@ -14,7 +14,7 @@ const openIDConfig = {
 describe('auth.ts', () => {
   beforeEach(async () => {
     mockAxios.get.mockResolvedValueOnce(openIDConfig);
-    await keycloakConfiguration.startConfiguration();
+    keycloakConfiguration.startConfiguration();
     expect(mockAxios.get).toHaveBeenCalledWith(config.auth.keycloak.configurationURL);
   });
 
