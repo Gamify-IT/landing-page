@@ -46,6 +46,8 @@ redirectIfUserIsSignedIn();
   </b-container>
   <div class="text-center">
     <a class="text-body" href="/third-party-license-notice/">Third Party Licenses</a>
+    <br />
+    <a class="text-body" href="/privacy-policy/">Privacy policy</a>
   </div>
 </template>
 

@@ -36,8 +36,9 @@ export default {
       clientId: 'game',
     },
   },
+  fileserverUrl: '/fileserver/',
+  keycloakAdminUrl: '/keycloak/admin/',
+  lecturerInterfaceBaseUrl: '/lecturer-interface/',
   overworldBackendBaseUrl: '/overworld/api/v1',
   overworldBaseUrl: '/overworld/',
-  lecturerInterfaceBaseUrl: '/lecturer-interface/',
-  keycloakAdminUrl: '/keycloak/admin/',
 };
