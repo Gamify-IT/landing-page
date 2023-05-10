@@ -48,6 +48,13 @@ const keycloakAdminInterface: ButtonElement = {
   color: setupColor,
 };
 
+const fileserver: ButtonElement = {
+  title: 'Fileserver',
+  subtitle: 'open fileserver and manage files',
+  description: '',
+  color: setupColor,
+};
+
 function selectCourse(id: number) {
   const url = config.overworldBaseUrl + id;
   openSite(url);
@@ -115,6 +122,12 @@ function openSite(url: string) {
             <ButtonBox :color="keycloakAdminInterface.color" :description="keycloakAdminInterface.description">
               <template #title>{{ keycloakAdminInterface.title }}</template>
               <template #subtitle>{{ keycloakAdminInterface.subtitle }}</template>
+            </ButtonBox>
+          </a>
+          <a :href="config.fileserverUrl" class="link-card-wrapper" target="_blank">
+            <ButtonBox :color="fileserver.color" :description="keycloakAdminInterface.description">
+              <template #title>{{ fileserver.title }}</template>
+              <template #subtitle>{{ fileserver.subtitle }}</template>
             </ButtonBox>
           </a>
         </div>
