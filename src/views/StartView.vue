@@ -56,7 +56,7 @@ const fileserver: ButtonElement = {
 };
 
 function selectCourse(id: number) {
-  const url = config.overworldBaseUrl + id;
+  const url = config.overworldBaseUrl + id + "/play";
   openSite(url);
 }
 
