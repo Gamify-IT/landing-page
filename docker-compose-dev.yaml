@@ -72,6 +72,12 @@ services:
       - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
 
   # frontends
+  landing-page:
+    container_name: landing-page
+    image: ghcr.io/gamify-it/landing-page:development
+    expose:
+      - "80"
+      
   overworld:
     container_name: overworld
     image: ghcr.io/gamify-it/overworld:main

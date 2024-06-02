@@ -74,7 +74,7 @@ services:
   # frontends
   landing-page:
     container_name: landing-page
-    build: .
+    image: ghcr.io/gamify-it/landing-page:main
     expose:
       - "80"
 
