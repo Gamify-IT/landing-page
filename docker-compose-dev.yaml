@@ -75,6 +75,8 @@ services:
   landing-page:
     container_name: landing-page
     image: ghcr.io/gamify-it/landing-page:development
+    restart: always
+    pull_policy: always
     expose:
       - "80"
       
