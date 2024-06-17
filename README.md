@@ -5,39 +5,49 @@ This is the first page which is shown when the user visits the website.
 For now, it only contains a link to the login page.
 
 ## Development
+> Beginning of additions (that work)
+### Getting started
 
-### With live rebuild
-
-```bash
-# Start database, login-backend and reverse-proxy in background
-docker-compose -f docker-compose-dev.yaml up --detach
-
-# Build project with hot-reload
-npm run serve
-
-# When you are down: shut down the database, backend, proxy, etc.
-docker-compose -f docker-compose.dev.yml down
+Clone the repository
+```sh
+git clone https://github.com/Gamify-IT/landing-page.git
 ```
 
-You can now see the whole build on <http://localhost>.
+Install the dependencies
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+To run the project locally with your IDE feature and have all necessary dependencies running,
+start the dependencies via docker:
+```sh
+docker compose -f docker-compose-dev.yaml up
+```
+Then start the frontend with:
+```sh
+npm run serve
+```
+You can now access the game at [localhost](http://localhost).
+
+### Build your local changes as a docker container
+To build and run your local changes as a docker container use:
+```sh
+docker compose up --build
+```
+You can remove the container with:
+
+```sh
+docker compose down
+```
+
+> End of additions
+
 
 #### Important links
 - Landing page: <http://localhost/>
 - Keycloak admin console: <http://localhost/keycloak/admin/master/console/>
 - Account page for Gamify-IT users (you can manually log in and out here): <http://localhost/keycloak/realms/Gamify-IT/account/#/>
-
-### From Docker build
-
-```bash
-# Build the project as a Docker image.
-# Start the landing-page, keycloak, database and reverse-proxy
-docker-compose up --build
-```
-
-## Project setup
-```
-npm install
-```
 
 ### Compiles and hot-reloads for development
 ```
