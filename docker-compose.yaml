@@ -81,7 +81,7 @@ services:
 
   overworld:
     container_name: overworld
-    image: ghcr.io/gamify-it/overworld:v1.5.0
+    image: ghcr.io/gamify-it/overworld:main
     restart: always
     pull_policy: always
     expose:
