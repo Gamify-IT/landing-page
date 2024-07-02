@@ -34,6 +34,13 @@ getActiveCourses()
     courseFetchFailed.value = true;
   });
 
+const worldGeneration: ButtonElement = {
+  title: 'World Generation',
+  subtitle: 'generate new worlds',
+  description: '',
+  color: setupColor,
+};
+
 const lecturerInterface: ButtonElement = {
   title: 'Lecturer Interface',
   subtitle: 'configure your cources',
@@ -118,6 +125,16 @@ function openSite(url: string) {
             <template #title>{{ lecturerInterface.title }}</template>
             <template #subtitle>{{ lecturerInterface.subtitle }}</template>
           </ButtonBox>
+
+          <ButtonBox
+            :color="worldGeneration.color"
+            :description="worldGeneration.description"
+            @click="openSite(config.overworldBaseUrl + '1' + '&generator')"
+          >
+            <template #title>{{ worldGeneration.title }}</template>
+            <template #subtitle>{{ worldGeneration.subtitle }}</template>
+          </ButtonBox>
+
           <a :href="config.keycloakAdminUrl" class="link-card-wrapper" target="_blank">
             <ButtonBox :color="keycloakAdminInterface.color" :description="keycloakAdminInterface.description">
               <template #title>{{ keycloakAdminInterface.title }}</template>
