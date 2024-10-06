@@ -89,16 +89,6 @@ function openSite(url: string) {
     <div>
       <h2>Play</h2>
       <div class="m-2">
-        <div class="d-flex flex-wrap justify-content-start">
-          <ButtonBox
-            :color="tutorial.color"
-            :description="tutorial.description"
-            @click="openSite(config.overworldBaseUrl + '1' + '&tutorial')"
-          >
-            <template #title>{{ tutorial.title }}</template>
-            <template #subtitle>{{ tutorial.subtitle }}</template>
-          </ButtonBox>
-        </div>
         <div v-if="courseFetchFailed" class="d-flex flex-wrap justify-content-start">
           <div>
             <ButtonBox :color="warningColor" description="Loading">
@@ -127,6 +117,16 @@ function openSite(url: string) {
             </ButtonBox>
           </div>
         </div>
+      </div>
+      <div class="d-flex flex-wrap justify-content-start">
+        <ButtonBox
+          :color="tutorial.color"
+          :description="tutorial.description"
+          @click="openSite(config.overworldBaseUrl + '1' + '&tutorial')"
+        >
+          <template #title>{{ tutorial.title }}</template>
+          <template #subtitle>{{ tutorial.subtitle }}</template>
+        </ButtonBox>
       </div>
     </div>
 
