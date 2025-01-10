@@ -117,16 +117,16 @@ function openSite(url: string) {
             </ButtonBox>
           </div>
         </div>
-      </div>
-      <div class="d-flex flex-wrap justify-content-start">
-        <ButtonBox
-          :color="tutorial.color"
-          :description="tutorial.description"
-          @click="openSite(config.overworldBaseUrl + '1' + '&tutorial')"
-        >
-          <template #title>{{ tutorial.title }}</template>
-          <template #subtitle>{{ tutorial.subtitle }}</template>
-        </ButtonBox>
+        <div class="d-flex flex-wrap justify-content-start">
+          <ButtonBox
+            :color="tutorial.color"
+            :description="tutorial.description"
+            @click="openSite(config.overworldBaseUrl + '1' + '&tutorial')"
+          >
+            <template #title>{{ tutorial.title }}</template>
+            <template #subtitle>{{ tutorial.subtitle }}</template>
+          </ButtonBox>
+        </div>
       </div>
     </div>
 
